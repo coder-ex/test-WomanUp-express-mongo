@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  nodejs:
+    build:
+      context: ./docker/nodejs
+    container_name: womanup-node-js
+    image: womanup/node-js
+    env_file: .env.local
+    working_dir: ${PATH_CONTAINER}
+    volumes:
+      - ${PATH_HOST}:${PATH_CONTAINER}
+    ports:
+      - "9229:9229"
+      - "8000:8000"
+    stdin_open: true
+    tty: true
+    networks:
+      - app_net
+
+  nginx:
+    build:
+      context: docker/nginx
+    image: womanup/http-nginx
+    container_name: womanup-http-nginx
+    depends_on:
+      - nodejs
+    volumes:
+      - ${PATH_HOST}:${PATH_CONTAINER}
+      - ${PATH_SERVICE}/logs/nginx:/var/log/nginx
+    ports:
+      - "192.168.222.1:80:80"
+      - "192.168.222.1:443:443"
+    networks:
+      app_net:
+        aliases: # алиасы нужны если нужно общаться внутри сети между хостами. Например, если вы используете api
+          - school.loc
+
+volumes:
+  nodejs:
+    driver: local
+
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.222.0/28

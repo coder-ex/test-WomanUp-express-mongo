@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: modules/auth/auth.controller.mjs</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: modules/auth/auth.controller.mjs</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { validationResult } from "express-validator";
+import { ApiError } from "../../exceptions/api.error.mjs";
+import { classObject as authService } from "./auth.service.mjs";
+
+/**
+ * класс предоставляет функционал регистрации и авторизации &lt;br/>
+ * пользователей с использованием JWT &lt;br/>
+ */
+class AuthController {
+    /** время в ms == 30 дней ( 30 * 24 * 60 * 60 * 1000 ) */
+    static _day30 = 2592000000;
+
+    /**
+     * регистрация пользователя
+     * @param {object} req - запрос
+     * @param {object} res - ответ
+     * @param {object} next - продолжение сопоставления последующих маршрутов
+     * @returns {json} возвращает ответ в JSON формате
+     */
+    async registration(req, res, next) {
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return next(ApiError.BadRequest('не верные параметры', errors.mapped()));
+            }
+            //const { email, password, role = 'USER', name = email.split('@', 1)[0], country = '', age = 0, originName = '', avatarName='' } = req.body;
+            const userData = await authService.registration(req.body);
+            res.cookie('refreshToken', userData.refreshToken, { maxAge: AuthController._day30, httponly: true });     // cookies живет 30 дней
+            return res.json({ 'message': 'Пользователь зарегистрирован', 'data': userData });
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    /**
+     * активация созданного аккаунта
+     * @param {object} req - запрос
+     * @param {object} res - ответ
+     * @param {object} next - продолжение сопоставления последующих маршрутов
+     * @returns {json} возвращает ответ в JSON формате
+     */
+    async activate(req, res, next) {
+        try {
+            const activationLink = req.params.link;
+            await authService.activate(activationLink);
+            return res.redirect(/*process.env.CLIENT_URL*/ 'http://192.168.222.1:8000');
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    /**
+     * авторизация пользователя
+     * @param {object} req - запрос
+     * @param {object} res - ответ
+     * @param {object} next - продолжение сопоставления последующих маршрутов
+     * @returns {json} возвращает ответ в JSON формате
+     */
+    async login(req, res, next) {
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return next(ApiError.BadRequest('не верные параметры', errors.mapped()));
+            }
+            const { email, password } = req.body;
+            const userData = await authService.login(email, password);
+            res.cookie('refreshToken', userData.refreshToken, { maxAge: AuthController._day30, httponly: true }); // cookies живет 30 дней
+            return res.json(userData);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    /**
+     * разлогинивание
+     * @param {object} req - запрос
+     * @param {object} res - ответ
+     * @param {object} next - продолжение сопоставления последующих маршрутов
+     * @returns {json} возвращает ответ в JSON формате
+     */
+    async logout(req, res, next) {
+        try {
+            const { refreshToken } = req.cookies;
+            const token = await authService.logout(refreshToken);
+            res.clearCookie('refreshToken')
+            return res.json(token);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    /**
+     * обновление refresh токена
+     * @param {object} req - запрос
+     * @param {object} res - ответ
+     * @param {object} next - продолжение сопоставления последующих маршрутов
+     * @returns {json} возвращает ответ в JSON формате
+     */
+    async refresh(req, res, next) {
+        try {
+            const { refreshToken } = req.cookies;
+            const userData = await authService.refresh(refreshToken);
+            res.cookie('refreshToken', userData.refreshToken, { maxAge: AuthController._day30, httpOnly: true });  // cookies живет 30 дней
+            return res.json(userData);
+        } catch (err) {
+            next(err);
+        }
+    }
+}
+
+const classObject = new AuthController();
+export { AuthController, classObject }</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ApiError.html">ApiError</a></li><li><a href="AuthController.html">AuthController</a></li><li><a href="TodoController.html">TodoController</a></li><li><a href="UploadController.html">UploadController</a></li><li><a href="UserController.html">UserController</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Mon Nov 28 2022 17:38:26 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

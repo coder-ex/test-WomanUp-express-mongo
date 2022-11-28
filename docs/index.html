@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h3>ТЗ откомпании <a href="https://womanup.online/">WomanUp</a></h3>
+<p><em>установленные пакеты:</em></p>
+<blockquote></blockquote>
+<pre><code>express dotenv mongoose db-migrate bcrypt express-validator --save
+nodemon --save-dev
+</code></pre>
+<p><em>тестовая DB - <a href="https://cloud.mongodb.com">MongoDB</a>:</em></p>
+<blockquote></blockquote>
+<pre><code>DB: todo_lists
+user: barbarian
+password: u8VOnzbfV51DVraW
+</code></pre>
+<p><em>настройка <a href="https://github.com/seppevs/migrate-mongo">migrate-mongo</a></em></p>
+<ul>
+<li>предварительно создать конфигурационный файл (для ES6 + ... -m esm)
+./node_modules/.bin/migrate-mongo init -m esm</li>
+</ul>
+<p><em>IP &amp; ADDR</em></p>
+<blockquote></blockquote>
+<pre><code>localhost:8000
+192.168.222.1:8000
+school.loc
+</code></pre>
+<hr>
+<blockquote></blockquote>
+<pre><code>ОПИСАНИЕ ТЗ
+
+Что нужно сделать:
+— написать API для todo-лист
+
+Функционал:
+* Регистрация/авторизация пользователя. При авторизации пользователь на клиент получает JWT из которого можно получить id пользователя.
+* Авторизованному пользователю доступны CRUD endpoints для сущности todo (должен быть middleware в котором будет проверка валидного токена)
+* Доступно получение todo как все разом, так и постранично. Возможны фильтры
+
+- Стек технологий:
+* NodeJS
+* Express
+* MongoDB/Mongoose (mongoDb Atlas)
+* JWT
+* bcrypt (для хеширования пароля)
+
+
+Нужно обязательно:
+— откомментировать код в JSDoc и выложить на github.
+— написать код самому,  а не скопировать с stackoverflow;
+
+Желательно:
+— Настроить Cors;
+— будет плюсом если API будет опубликовано на бесплатном сервисе (например Vercel)
+— Будет возможность загружать файлы с клиента и затем раздавать статику;
+</code></pre>
+<blockquote>
+<p><em>прим: Для дальнейшей обратной связи и назначения собеседования по итогу готовности тестового задания необходимо связаться через Telegram @natali_ababij. В начале сообщения поставить #вакансия</em></p>
+</blockquote>
+<hr>
+<p><em>реализовано REST API</em></p>
+<ul>
+<li>
+<p>GET:    /api/seed/roles - создание ролей [ USER, ADMIN ] - переписать под Node.js CLI command</p>
+</li>
+<li>
+<p>GET:    /api/seed/todos - загрузка тестовых TODO`s - переписать под Node.js CLI command</p>
+</li>
+<li>
+<p>POST:   /api/auth/registration - регистрация пользователя</p>
+</li>
+<li>
+<p>GET:    /api/auth/activate/:link - активация по ссылке</p>
+</li>
+<li>
+<p>POST:   /api/auth/login - авторизация пользователя</p>
+</li>
+<li>
+<p>POST:   /api/auth/logout - разлогирование пользователя (только авторизованный USER)</p>
+</li>
+<li>
+<p>GET:    /api/auth/refresh (token) - обновление refresh токена (только авторизованный ADMIN | USER)</p>
+</li>
+<li>
+<p>GET:    /api/users/all - вывод всех пользователей (только авторизованный ADMIN)</p>
+</li>
+<li>
+<p>GET:    /api/users/:id - вывод данных пользователя по id пользователя (только авторизованный ADMIN | USER)</p>
+</li>
+<li>
+<p>PATCH:  /api/users/:id - изменение данных пользователя по id пользователя (только авторизованный ADMIN | USER)</p>
+</li>
+<li>
+<p>DELETE: /api/users/:id - удаление пользователя по id пользователя (только авторизованный ADMIN | USER)</p>
+</li>
+<li>
+<p>PUT:    /api/upload/:id - загрузка аватарок, привязка к профилю пользователя по id пользователя (только авторизованный USER)</p>
+</li>
+<li>
+<p>GET:    /api/upload - получение всех аваторок (только авторизованный ADMIN | USER)</p>
+</li>
+<li>
+<p>POST:   /api/todo - создание заметки (только авторизованный ADMIN | USER)</p>
+</li>
+<li>
+<p>GET:    /api/todo/:userId/:todoId - посмотреть заметку по id (только авторизованный ADMIN | USER)</p>
+</li>
+<li>
+<p>PUT:    /api/todo/:userId/:todoId - редактирование заметки по id (только авторизованный ADMIN | USER)</p>
+</li>
+<li>
+<p>GET:    /api/todo/:userId - вывод всех заметок по id пользователя (только авторизованный ADMIN | USER)</p>
+</li>
+<li>
+<p>GET:    /api/todo - вывод всех заметок в системе (только авторизованный ADMIN)</p>
+</li>
+</ul>
+<hr>
+<p><em>дополительные данные</em></p>
+<ol>
+<li>
+<p>использование миграций</p>
+</li>
+<li>
+<p>использование транзакций [ особенность MongoDB обязательная репликация БД для транзакций ]:</p>
+</li>
+<li>
+<p>тестировалось на облачной БД где репликация встроена в облако</p>
+<pre><code> &gt; в каталоге docker есть конфиги для docker-compose + dockerfile под шардирование MongoDB контейнерах docker
+ &gt; требуется донастройка под проект в части создания пользователя admin + пользователя БД + пароли + права доступа
+</code></pre>
+</li>
+<li>
+<p>аватарки грузятся на сервер проекта, желательно реализовать загрузку на AWS S3</p>
+</li>
+<li>
+<p>дополнительные файлы в каталоге проекта ./doc:</p>
+<pre><code> &gt; diagram-table-export.dia - схема связей таблиц проекта
+ &gt; docs/ - описание API в JSDoc формате
+ &gt; WomanUp-API.postman_collection.json - коллекция Postman [ адрес в коллекции http://school.loc заменить на реальный ]
+</code></pre>
+</li>
+<li>
+<p>реализована пагинация заметок (TODO) со смещением
+<a href="https://cloudnweb.dev/2021/04/pagination-nodejs-mongoose/">пример по пагинации взят тут</a></p>
+</li>
+</ol>
+<p><em>!! перед стартом выполнить создание ролей и подгрузку тестовых todo !!</em></p>
+<hr></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ApiError.html">ApiError</a></li><li><a href="AuthController.html">AuthController</a></li><li><a href="TodoController.html">TodoController</a></li><li><a href="UploadController.html">UploadController</a></li><li><a href="UserController.html">UserController</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Mon Nov 28 2022 17:38:26 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

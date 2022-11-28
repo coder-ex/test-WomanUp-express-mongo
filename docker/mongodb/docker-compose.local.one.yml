@@ -1,0 +1,110 @@
+version: "3.8"
+
+services:
+  nodejs:
+    build:
+      context: ./docker/nodejs
+    container_name: womanup-node-js
+    image: womanup/node-js
+    env_file: .env.local
+    working_dir: ${PATH_CONTAINER}
+    volumes:
+      - ${PATH_HOST}:${PATH_CONTAINER}
+    ports:
+      - "9229:9229"
+      - "8000:8000"
+    stdin_open: true
+    tty: true
+    networks:
+      - app_net
+
+  nginx:
+    build:
+      context: docker/nginx
+    image: womanup/http-nginx
+    container_name: womanup-http-nginx
+    depends_on:
+      - nodejs
+    volumes:
+      - ${PATH_HOST}:${PATH_CONTAINER}
+      - ${PATH_SERVICE}/logs/nginx:/var/log/nginx
+    ports:
+      - "192.168.222.1:80:80"
+      - "192.168.222.1:443:443"
+    networks:
+      app_net:
+        aliases: # алиасы нужны если нужно общаться внутри сети между хостами. Например, если вы используете api
+          - school.loc
+
+  mongo:
+    image: mongo:5
+    container_name: womanup-mongo
+    env_file: .env.local
+    #restart: always
+    depends_on:
+      - nginx
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${DB_NAME}
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-db:/data/db
+      - mongo-configdb:/data/configdb
+      - mongo-key:/etc/mongo-key
+    networks:
+      app_net:
+        ipv4_address: 192.168.222.4
+
+  mongo-express:
+    #image: mongo-express:0.54.0
+    image: mongo-express:latest
+    container_name: womanup-mongo-express
+    env_file: .env.local
+    depends_on:
+      - mongo
+    volumes:
+      - type: bind
+        source: ./wait-for.sh
+        target: /wait-for.sh
+    entrypoint:
+      - /bin/sh
+      - /wait-for.sh
+      - mongo:27017
+      - --
+      - tini
+      - --
+      - /docker-entrypoint.sh
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${DB_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${DB_PASSWORD}
+      #ME_CONFIG_BASICAUTH_USERNAME: ${DB_USERNAME}
+      #ME_CONFIG_BASICAUTH_PASSWORD: ${DB_PASSWORD}
+      ME_CONFIG_MONGODB_SERVER: ${DB_HOST}
+      ME_CONFIG_MONGODB_PORT: ${DB_PORT}
+      #ME_CONFIG_MONGODB_URL: ${DB_URL}
+      ME_CONFIG_OPTIONS_EDITORTHEME: "3024-night"
+      #ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
+    ports:
+      - "0.0.0.0:8081:8081"
+    networks:
+      - app_net
+
+volumes:
+  mongo-db:
+    driver: local
+  mongo-configdb:
+    driver: local
+  mongo-key:
+    driver: local
+  nodejs:
+    driver: local
+
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.222.0/28

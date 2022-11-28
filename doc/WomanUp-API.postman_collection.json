@@ -1,0 +1,492 @@
+{
+	"info": {
+		"_postman_id": "1fc6bb7a-ed40-4ba5-b881-a420afc218b7",
+		"name": "WomanUp-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "seeds",
+			"item": [
+				{
+					"name": "Создание ролей",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://school.loc/api/seed/roles",
+							"protocol": "http",
+							"host": [
+								"school",
+								"loc"
+							],
+							"path": [
+								"api",
+								"seed",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Создание todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://school.loc/api/seed/todos",
+							"protocol": "http",
+							"host": [
+								"school",
+								"loc"
+							],
+							"path": [
+								"api",
+								"seed",
+								"todos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/auth",
+			"item": [
+				{
+					"name": "Создание пользователя",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"имя не обязательное поле\",\n    \"email\": \"kkw@ya.ru\",\n    \"password\": \"12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://school.loc/api/auth/registration",
+							"protocol": "http",
+							"host": [
+								"school",
+								"loc"
+							],
+							"path": [
+								"api",
+								"auth",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Выход из авторизации",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://school.loc/api/auth/logout",
+							"protocol": "http",
+							"host": [
+								"school",
+								"loc"
+							],
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Авторизация пользователя",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"kkw@ya.ru\",\n    \"password\": \"12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://school.loc/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"school",
+								"loc"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Получение пользователя по ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InU1NEB5YS5ydSIsImlkIjoiNjM4MDc3NDQ4NDYwODlmMzljZjRkODg3IiwiaXNBY3RpdmF0ZWQiOmZhbHNlLCJyb2xlIjpbIjYzN2YxMWQwZjNhZWM0NDYwZTQzOGNiNCJdLCJpYXQiOjE2NjkzNjM1MjYsImV4cCI6MTY2OTM2NzEyNn0.oeSCW9t0cPlDzum4YTMqxKbZE1fxLO8PULNQ6t2jNZ4",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://school.loc/api/users/63807744846089f39cf4d887",
+							"protocol": "http",
+							"host": [
+								"school",
+								"loc"
+							],
+							"path": [
+								"api",
+								"users",
+								"63807744846089f39cf4d887"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Обновление refreshToken",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://school.loc/api/auth/refresh",
+							"protocol": "http",
+							"host": [
+								"school",
+								"loc"
+							],
+							"path": [
+								"api",
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/users",
+			"item": [
+				{
+					"name": "Изменение пользователя по ID",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imtrd0B5YS5ydSIsImlkIjoiNjM4MDg5ODk0YWE4YTIwMDBhOTRkODI5IiwiaXNBY3RpdmF0ZWQiOmZhbHNlLCJyb2xlIjpbIjYzN2YxMWQwZjNhZWM0NDYwZTQzOGNiNCJdLCJpYXQiOjE2NjkzNjgyMDMsImV4cCI6MTY2OTM3MTgwM30.mGB8y1hH6PpTx90_09ZYqJzAaCx5k6fmFTw4QothzjM",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"New name\",\n    \"email\": \"kkw@ya.ru\",\n    \"password\": \"12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://school.loc/api/users/638089894aa8a2000a94d829",
+							"protocol": "http",
+							"host": [
+								"school",
+								"loc"
+							],
+							"path": [
+								"api",
+								"users",
+								"638089894aa8a2000a94d829"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Получение всех пользователей",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imtrd0B5YS5ydSIsImlkIjoiNjM4MDg5ODk0YWE4YTIwMDBhOTRkODI5IiwiaXNBY3RpdmF0ZWQiOnRydWUsInJvbGUiOlsiNjM3ZjExZDBmM2FlYzQ0NjBlNDM4Y2IyIl0sImlhdCI6MTY2OTM2ODI5NywiZXhwIjoxNjY5MzcxODk3fQ.OQgLHzIfxbNIhil_9WeWDbvua0KRX8Jeyt65RfHpNvY",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://school.loc/api/users/all",
+							"protocol": "http",
+							"host": [
+								"school",
+								"loc"
+							],
+							"path": [
+								"api",
+								"users",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/upload",
+			"item": [
+				{
+					"name": "Просмотреть файлы",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://school.loc/api/upload/",
+							"protocol": "http",
+							"host": [
+								"school",
+								"loc"
+							],
+							"path": [
+								"api",
+								"upload",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Загрузить файл",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InUwQHlhLnJ1IiwiaWQiOiI2MzgwODk2ZjRhYThhMjAwMGE5NGQ4MTEiLCJpc0FjdGl2YXRlZCI6ZmFsc2UsInJvbGUiOlsiNjM3ZjExZDBmM2FlYzQ0NjBlNDM4Y2I0Il0sImlhdCI6MTY2OTQ2OTYyNiwiZXhwIjoxNjY5NDczMjI2fQ.AQCtFtfCIXwNcj_xrYzrVLh5yMT6ofKTrnLUxvsHBTg",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/home/kkw/Изображения/Balun.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://school.loc/api/upload/6380896f4aa8a2000a94d811",
+							"protocol": "http",
+							"host": [
+								"school",
+								"loc"
+							],
+							"path": [
+								"api",
+								"upload",
+								"6380896f4aa8a2000a94d811"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/todo",
+			"item": [
+				{
+					"name": "Создать задачу",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"тестовая задача 1\",\n    \"body\": \"какое то там описание задачи\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://school.loc/api/todo",
+							"protocol": "http",
+							"host": [
+								"school",
+								"loc"
+							],
+							"path": [
+								"api",
+								"todo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Задачи пользователя",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InUwQHlhLnJ1IiwiaWQiOiI2MzgwODk2ZjRhYThhMjAwMGE5NGQ4MTEiLCJpc0FjdGl2YXRlZCI6ZmFsc2UsInJvbGUiOlsiNjM3ZjExZDBmM2FlYzQ0NjBlNDM4Y2I0Il0sImlhdCI6MTY2OTYyNjk3NiwiZXhwIjoxNjY5NjMwNTc2fQ.XGi3xC4Hhs29lfqlwNlGIkR7rMPDrfV68VTR_6QHTrw",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://school.loc/api/todo/6380896f4aa8a2000a94d811?limit=3&sort=asc&skip=63",
+							"protocol": "http",
+							"host": [
+								"school",
+								"loc"
+							],
+							"path": [
+								"api",
+								"todo",
+								"6380896f4aa8a2000a94d811"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "3"
+								},
+								{
+									"key": "sort",
+									"value": "asc"
+								},
+								{
+									"key": "skip",
+									"value": "63"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Задачи всех пользователей",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imtrd0B5YS5ydSIsImlkIjoiNjM4MDg5ODk0YWE4YTIwMDBhOTRkODI5IiwiaXNBY3RpdmF0ZWQiOnRydWUsInJvbGUiOlsiNjM3ZjExZDBmM2FlYzQ0NjBlNDM4Y2IyIl0sImlhdCI6MTY2OTYyNzM5MSwiZXhwIjoxNjY5NjMwOTkxfQ.PQusSWhAt-wYSiCxluk2XVwKPvxY71sf1HRrDuka56o",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://school.loc/api/todo?limit=3&sort=asc&skip=63",
+							"protocol": "http",
+							"host": [
+								"school",
+								"loc"
+							],
+							"path": [
+								"api",
+								"todo"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "3"
+								},
+								{
+									"key": "sort",
+									"value": "asc"
+								},
+								{
+									"key": "skip",
+									"value": "63"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Просмотр задачи по id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InUwQHlhLnJ1IiwiaWQiOiI2MzgwODk2ZjRhYThhMjAwMGE5NGQ4MTEiLCJpc0FjdGl2YXRlZCI6ZmFsc2UsInJvbGUiOlsiNjM3ZjExZDBmM2FlYzQ0NjBlNDM4Y2I0Il0sImlhdCI6MTY2OTY0Nzg1MSwiZXhwIjoxNjY5NjUxNDUxfQ.OGmLR4rtAy63xcxzQ4FSFMoKxee4-CQw4zUQfmvBzyU",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://school.loc/api/todo/6380896f4aa8a2000a94d811/6384caa868207c5798aec202",
+							"protocol": "http",
+							"host": [
+								"school",
+								"loc"
+							],
+							"path": [
+								"api",
+								"todo",
+								"6380896f4aa8a2000a94d811",
+								"6384caa868207c5798aec202"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Редактировани задачи",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InUwQHlhLnJ1IiwiaWQiOiI2MzgwODk2ZjRhYThhMjAwMGE5NGQ4MTEiLCJpc0FjdGl2YXRlZCI6ZmFsc2UsInJvbGUiOlsiNjM3ZjExZDBmM2FlYzQ0NjBlNDM4Y2I0Il0sImlhdCI6MTY2OTY0Nzg1MSwiZXhwIjoxNjY5NjUxNDUxfQ.OGmLR4rtAy63xcxzQ4FSFMoKxee4-CQw4zUQfmvBzyU",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://school.loc/api/todo/6380896f4aa8a2000a94d811/6384caa868207c5798aec202",
+							"protocol": "http",
+							"host": [
+								"school",
+								"loc"
+							],
+							"path": [
+								"api",
+								"todo",
+								"6380896f4aa8a2000a94d811",
+								"6384caa868207c5798aec202"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
